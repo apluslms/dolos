@@ -52,10 +52,10 @@ services:
         condition: service_healthy
     networks:
       - dolos
-        #    healthcheck:
-        #      start_period: 2s
-        #      interval: 10s
-        #      test: curl --fail http://localhost:3000/up || exit 1
+    healthcheck:
+      start_period: 2s
+      interval: 10s
+      test: curl --fail "$$DOLOS_API_URL/up" || exit 1
   worker:
     image: ghcr.io/dodona-edu/dolos-api
     build: ./api/
