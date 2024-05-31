@@ -6,6 +6,8 @@
 *.tsbuildinfo
 *.txt
 *.zip
+*.env
+*.pem
 .nvmrc
 .nyc_output
 .vscode
