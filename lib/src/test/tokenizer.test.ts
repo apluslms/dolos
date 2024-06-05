@@ -10,6 +10,7 @@ const languageFiles = {
   "char": "../samples/char/caesar.txt",
   "cpp": "../samples/cpp/caesar.cpp",
   "elm": "../samples/elm/Caesar.elm",
+  "groovy": "../samples/groovy/caesar.groovy",
   "java": "../samples/java/Caesar.java",
   "javascript": "../samples/javascript/sample.js",
   "python": "../samples/python/caesar.py",
@@ -68,6 +69,17 @@ test("language picker should detect most common language", t => {
 test("should be able to use external tree-sitter parsers (tree-sitter-json)", async t => {
   const file = (await readPath("./package.json")).ok();
   const language = await (new LanguagePicker().findLanguage("json"));
+
+  const tokenizer = await language.createTokenizer();
+  t.truthy(tokenizer);
+
+  const { tokens } = tokenizer.tokenizeFile(file);
+  t.truthy(tokens);
+});
+
+test("should be able to parse larger files", async t => {
+  const file = new File("long.js", "var test = 1;\n".repeat(10000));
+  const language = await (new LanguagePicker().findLanguage("javascript"));
 
   const tokenizer = await language.createTokenizer();
   t.truthy(tokenizer);

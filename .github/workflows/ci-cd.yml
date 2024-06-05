@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ "18", "20", "21" ]
+        node: [ "18", "20", "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -94,7 +94,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node:  [ "18", "20", "21" ]
+        node:  [ "18", "20", "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -126,7 +126,7 @@ jobs:
       - name: Build 🔧
         run: |
           cd cli/
-          npm run build --force
+          npm run build -- --force
 
   cli-lint:
     name: "CLI 💻️ - lint 📏"
@@ -134,7 +134,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "21" ]
+        node: [ "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -172,7 +172,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "18", "20", "21" ]
+        node: [ "18", "20", "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -203,7 +203,7 @@ jobs:
         run: |
           cd core/
           npm run build
-          npm run test -v --serial
+          npm run test -- -v --serial
 
   core-lint:
     name: "Core ❤️ - lint 📏"
@@ -211,7 +211,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "21" ]
+        node: [ "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -249,7 +249,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "18", "20", "21" ]
+        node: [ "18", "20", "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -282,7 +282,7 @@ jobs:
         run: |
           cd lib/
           npm run build
-          npm run test -v --serial
+          npm run test -- -v --serial
 
   parsers-build:
     name: "Parsers 👓 - build 🔧"
@@ -290,7 +290,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "18", "20", "21" ]
+        node: [ "18", "20", "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -331,7 +331,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "21" ]
+        node: [ "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -370,7 +370,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "21" ]
+        node: [ "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -410,7 +410,6 @@ jobs:
           npm run build
 
       - name: Deploy to staging 🚀
-        if: ${{ matrix.node == '20' }}
         run: |
           if [ -n "$KNOWN_HOSTS" ]; then
             cd web/
@@ -441,7 +440,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node: [ "21" ]
+        node: [ "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -479,7 +478,7 @@ jobs:
     needs: install-deps
     strategy:
       matrix:
-        node:  [ "21" ]
+        node:  [ "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -525,7 +524,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     strategy:
       matrix:
-        node:  [ "21" ]
+        node:  [ "22" ]
       fail-fast: false
     steps:
       - name: Checkout 🛎️
@@ -587,7 +586,7 @@ jobs:
       - name: Build CLI 🔧
         run: |
           cd cli/
-          npm run build --force
+          npm run build -- --force
 
       - name: Build web 🔧
         run: |
@@ -640,7 +639,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ "21" ]
+        node: [ "22" ]
       fail-fast: false
     steps:
       - name: Setup Node 📚
@@ -727,6 +726,8 @@ jobs:
     name: "Publish docker containers 🚢"
     needs: publish
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
