@@ -5,6 +5,7 @@ export type UploadReport = {
   date: string;
   status: UploadReportStatus;
   statusUrl: string;
+  token: string;
   response?: Record<string, any>;
   stderr?: string;
 
@@ -31,6 +32,7 @@ export class Report {
     public readonly date: string,
     public status: UploadReportStatus,
     public readonly url: string,
+    public readonly token: string,
     public readonly datasetURL?: string,
     public readonly stderr?: string,
     public error?: string,
@@ -51,6 +53,7 @@ export class Report {
       response.created_at,
       response.status,
       response.url,
+      response.token,
       response.dataset?.zipfile,
       response.stderr?.replace(/\s*.\[\d+m\[error\].\[\d+m\s*/g, ""),
       response.error,
@@ -66,6 +69,7 @@ export class Report {
       report.date,
       report.status,
       `${import.meta.env.VITE_API_URL}/reports/${report.reportId}`,
+      report.token,
       report.response?.dataset?.zipfile,
       report.stderr,
       undefined,
@@ -83,6 +87,7 @@ export class Report {
           object.date,
           object.status,
           object.url,
+          object.token,
           object.datasetURL,
           object.stderr,
           object.error,

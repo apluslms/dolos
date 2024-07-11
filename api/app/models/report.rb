@@ -37,6 +37,8 @@ class Report < ApplicationRecord
   has_one_attached :kgrams
   has_one_attached :pairs
 
+  validates :token, allow_blank: true, uniqueness: true
+
   enum :status, { unknown: 0, queued: 1, running: 2, failed: 3, error: 4, finished: 5, purged: 6 }
 
   validates_associated :dataset, on: :create
