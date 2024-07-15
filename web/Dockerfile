@@ -10,7 +10,7 @@ RUN npm install && apk add --no-cache curl
 
 ENV VITE_HOST=0.0.0.0
 ENV VITE_PORT=8080
-ENV VITE_API_URL=http://localhost:3000
+ENV VITE_API_URL=https://dolos.cs.aalto.fi/api
 ENV VITE_MODE=server
 EXPOSE 8080/tcp
 
