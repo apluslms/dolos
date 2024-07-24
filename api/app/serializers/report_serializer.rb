@@ -19,7 +19,7 @@
 #  index_reports_on_dataset_id  (dataset_id)
 #
 class ReportSerializer < ApplicationSerializer
-  attributes :error, :exit_status, :status, :stderr, :stdout, :name, :html_url
+  attributes :error, :exit_status, :status, :stderr, :stdout, :name, :html_url, :token
 
   has_one :dataset
 end

@@ -1,3 +1,4 @@
+
 name: dolos
 version: "3.9"
 services:
@@ -16,12 +17,10 @@ services:
   web:
     image: ghcr.io/dodona-edu/dolos-web
     build: ./web/
-    ports:
-      - "8080:8080"
     environment:
       VITE_HOST: 0.0.0.0
       VITE_PORT: 8080
-      VITE_API_URL: https://radar.minus.cs.aalto.fi/dolos/api
+      VITE_API_URL: https://radar.cs.aalto.fi/dolos/api
       VITE_MODE: server
     depends_on:
       - api
@@ -34,15 +33,13 @@ services:
   api:
     image: ghcr.io/dodona-edu/dolos-api
     build: ./api/
-    ports:
-      - "3000:3000"
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails db:prepare && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:prepare && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - dolos-api-storage:/dolos/storage
       - /tmp:/tmp
     environment:
-      DOLOS_API_FRONT_END_URL: https://radar.minus.cs.aalto.fi/dolos
-      DOLOS_API_URL: https://radar.minus.cs.aalto.fi/dolos/api
+      DOLOS_API_FRONT_END_URL: https://radar.cs.aalto.fi/dolos
+      DOLOS_API_URL: https://radar.cs.aalto.fi/dolos/api
       DOLOS_API_DISABLE_FORCE_SSL: false
       DOLOS_API_DATABASE_USERNAME: root
       DOLOS_API_DATABASE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -68,8 +65,8 @@ services:
       - /tmp:/tmp
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      DOLOS_API_FRONT_END_URL: https://radar.minus.cs.aalto.fi/dolos
-      DOLOS_API_HOSTS: radar.minus.cs.aalto.fi/dolos/api
+      DOLOS_API_FRONT_END_URL: https://radar.cs.aalto.fi/dolos
+      DOLOS_API_HOSTS: radar.cs.aalto.fi/dolos
       DOLOS_API_DATABASE_USERNAME: root
       DOLOS_API_DATABASE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       DOLOS_API_DATABASE_HOST: db

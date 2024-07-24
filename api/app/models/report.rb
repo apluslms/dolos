@@ -23,7 +23,7 @@ require 'csv'
 class Report < ApplicationRecord
   belongs_to :dataset
 
-  AUTOMATICALLY_DELETE_AFTER = 30.days
+  AUTOMATICALLY_DELETE_AFTER = 1.hour
 
   RESULT_FILES = {
     'metadata.csv' => :metadata,
@@ -36,6 +36,8 @@ class Report < ApplicationRecord
   has_one_attached :files
   has_one_attached :kgrams
   has_one_attached :pairs
+
+  validates :token, allow_blank: true, uniqueness: true
 
   enum :status, { unknown: 0, queued: 1, running: 2, failed: 3, error: 4, finished: 5, purged: 6 }
 
@@ -56,8 +58,8 @@ class Report < ApplicationRecord
     update(status: :queued)
     AnalyzeDatasetJob.perform_later(self)
 
-    # Automatic cleanup is currently disabled
-    # delay(run_at: AUTOMATICALLY_DELETE_AFTER.from_now).purge_files!
+    # Automatic cleanup is currently ENABLED by Mikael Gustafsson on 2024-05-22
+    delay(run_at: AUTOMATICALLY_DELETE_AFTER.from_now).purge_files!
   end
 
   def all_files_present?

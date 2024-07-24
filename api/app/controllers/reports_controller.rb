@@ -1,3 +1,6 @@
+require 'jwt';
+require 'securerandom';
+
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show destroy data]
 
@@ -9,6 +12,15 @@ class ReportsController < ApplicationController
   # POST /reports
   def create
     @report = Report.new(dataset_attributes: dataset_params)
+    payload = { 'data': @report.id, 'time': Time.now.to_i}
+
+    secret = SecureRandom.base64(64)
+    
+    token = JWT.encode payload, secret, 'HS256'
+
+    # Save token to report in ruby on rails
+    @report.token = token
+    @report.update(token: token)
     if @report.save
       render json: @report, status: :created, location: @report
     else

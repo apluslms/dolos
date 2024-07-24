@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show"
 
+  get 'auth', to: 'auth#authenticate'
   # Defines the root path route ("/")
   # root "articles#index"
 end
