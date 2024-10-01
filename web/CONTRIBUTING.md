@@ -55,6 +55,12 @@ git clone --recursive git://github.com/dodona-edu/dolos.git
 git submodule update --init --recursive
 ```
 
+Then make sure to build the dolos-core manually by going to the directory [core] and running 
+```shell
+# in the core directory:
+npm run build
+```
+
 Next, go to the **root directory** and ensure the npm dependencies are installed, up-to-date and the different modules are linked by running
 ```shell
 # in the root directory:
